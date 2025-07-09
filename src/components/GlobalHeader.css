@@ -1,0 +1,95 @@
+/* 保留所有原始样式，直接复制即可 */
+.GlobalHeader {
+    background-color: #3498db; /* 蓝色背景 */
+    background: linear-gradient(135deg, #3498db, #1a5276); /* 渐变色增强视觉效果 */
+    padding: 20px 0; /* 上下内边距 */
+    text-align: center; /* 文字居中 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 添加阴影效果 */
+    position: fixed;
+    overflow: hidden;
+    top: 0;           /* 距离顶部0 */
+    left: 0;
+    width: 100%;
+    z-index: 100; /* 确保在顶部 */
+}
+
+.title {
+    color: white; /* 白色文字 */
+    font-size: 2.5rem; /* 大字体 */
+    font-weight: 900; /* 粗体 */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 文字阴影 */
+    letter-spacing: 2px; /* 字母间距 */
+    position: relative;
+    z-index: 2;
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* 现代字体 */
+    animation: pulse 2s infinite alternate; /* 添加文字动画 */
+}
+
+/* 添加一些装饰性元素增强视觉效果 */
+.GlobalHeader::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    z-index: 1;
+    animation: rotate 20s linear infinite;
+}
+
+/* 添加爆炸效果的元素 */
+.GlobalHeader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+            radial-gradient(circle at 20% 30%, rgba(255,235,59,0.4) 0%, transparent 40%),
+            radial-gradient(circle at 70% 50%, rgba(255,152,0,0.4) 0%, transparent 45%),
+            radial-gradient(circle at 40% 70%, rgba(255,87,34,0.4) 0%, transparent 50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 动画效果 */
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    to {
+        transform: scale(1.05);
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 235, 59, 0.6);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+        padding: 0 10px;
+    }
+
+    .GlobalHeader {
+        padding: 15px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+}
