@@ -1,0 +1,119 @@
+.login-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffe0e9 100%);
+  z-index: 0;
+}
+
+.login-box {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(255, 105, 180, 0.15), 0 1.5px 6px rgba(0,0,0,0.05);
+  padding: 40px 32px 32px 32px;
+  width: 340px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-title {
+  font-size: 2rem;
+  color: #ff69b4;
+  margin-bottom: 24px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 1rem;
+  color: #ff69b4;
+  margin-bottom: 2px;
+}
+
+.input-group input {
+  padding: 10px 12px;
+  border: 1.5px solid #ffd6e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input-group input:focus {
+  border: 1.5px solid #ff69b4;
+}
+
+.login-btn {
+  margin-top: 10px;
+  padding: 12px 0;
+  background: linear-gradient(90deg, #ff69b4 0%, #ffb347 100%);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255, 105, 180, 0.08);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.login-btn:hover {
+  background: linear-gradient(90deg, #ffb347 0%, #ff69b4 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+
+.login-decoration {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.blindbox-icon {
+  font-size: 2.2rem;
+  animation: bounce 1.2s infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+.blindbox-tip {
+  color: #ff69b4;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    padding: 28px 8vw 24px 8vw;
+    width: 98vw;
+  }
+  .login-title {
+    font-size: 1.3rem;
+  }
+}

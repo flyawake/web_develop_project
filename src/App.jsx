@@ -1,18 +1,18 @@
 // App.jsx
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalHeader from './components/GlobalHeader';
+import AppRouter from './router';
 import './App.css';
 
 function App() {
     return (
-        <div className="App">
-            <GlobalHeader />
-            {/* 其他页面内容 */}
-            <div style={{ marginTop: '150px' }}>
-                {/* 添加一些间距防止内容被头部覆盖 */}
-                <p>这里是页面内容</p>
+        <Router>
+            <div className="App">
+                <GlobalHeader />
+                <AppRouter />
             </div>
-        </div>
+        </Router>
     );
 }
 
