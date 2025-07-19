@@ -9,5 +9,5 @@ export const AppDataSource = new DataSource({
   password: '123456',
   database: 'PE',
   entities: [UserPO],
-  synchronize: true, // 自动同步表结构
+  synchronize: false, // 自动同步表结构
 }); 

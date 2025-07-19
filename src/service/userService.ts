@@ -26,4 +26,11 @@ export class UserService {
     }
     return { id: user.id, phone: user.phone, username: user.username };
   }
+
+  // 通过ID查找用户
+  async findById(id: number) {
+    const user = await this.userRepo.findOneBy({ id });
+    if (!user) return null;
+    return { id: user.id, phone: user.phone, username: user.username };
+  }
 } 
