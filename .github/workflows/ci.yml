@@ -10,6 +10,20 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_DATABASE: PE
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
@@ -26,7 +40,22 @@ jobs:
         run: npm run lint
         continue-on-error: true
 
+      - name: 等待 MySQL 启动
+        run: |
+          for i in {1..30}; do
+            if mysqladmin ping -h127.0.0.1 -uroot -proot; then
+              break
+            fi
+            sleep 2
+          done
+
       - name: 运行测试
+        env:
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: 3306
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+          MYSQL_DATABASE: testdb
         run: npm test
 
       - name: 生成构建
