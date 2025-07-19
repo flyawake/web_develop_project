@@ -7,6 +7,8 @@ import { join } from 'path';
 // import { NotFoundFilter } from './filter/notfound.filter';
 import { ReportMiddleware } from './middleware/report.middleware';
 
+import { AppDataSource } from './data-source';
+
 @Configuration({
   imports: [
     koa,
@@ -27,5 +29,7 @@ export class MainConfiguration {
     this.app.useMiddleware([ReportMiddleware]);
     // add filter
     // this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
+
+    await AppDataSource.initialize();
   }
 }
