@@ -1,10 +1,5 @@
 import { USER_MODULE } from './_prefix'
 
-/**
- * 注册用户
- * @param {Object} userInfo - { username, phone, password }
- * @returns {Promise}
- */
 export function register(userInfo) {
   return fetch(`${USER_MODULE}/register`, {
     method: 'POST',
@@ -15,11 +10,6 @@ export function register(userInfo) {
   }).then(res => res.json());
 }
 
-/**
- * 用户登录
- * @param {Object} loginInfo - { phone, password }
- * @returns {Promise}
- */
 export function login(loginInfo) {
   return fetch(`${USER_MODULE}/login`, {
     method: 'POST',
@@ -29,3 +19,12 @@ export function login(loginInfo) {
     body: JSON.stringify(loginInfo),
   }).then(res => res.json());
 } 
+
+export function getUserInfo(userId) {
+  return fetch(`${USER_MODULE}/getUserInfo`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(res => res.json());
+}

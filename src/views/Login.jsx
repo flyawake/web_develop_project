@@ -23,13 +23,11 @@ const Login = () => {
     try {
       const res = await login({ phone: form.phone, password: form.password });
       if (res && res.success) {
-        window.alert('登录成功！');
-        // 登录成功后的跳转逻辑可在此补充
+        navigate('/profile');
       } else {
         window.alert(res?.message || '登录失败，请重试');
       }
     } catch (err) {
-      console.log(err);
       window.alert('登录失败，请检查网络或稍后再试');
     } finally {
       setLoading(false);
