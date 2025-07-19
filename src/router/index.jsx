@@ -4,8 +4,8 @@ import Login from '../views/Login';
 import Register from '../views/Register';
 
 const routes = [
-  { path: '/', element: <Login />, name: '登录' },
-  { path: '/register', element: <Register />, name: '注册' },
+  { path: '/', element: <Login />, name: '登录 - 体育活动室' },
+  { path: '/register', element: <Register />, name: '注册 - 体育活动室' },
   // 其他页面可继续添加
 ];
 

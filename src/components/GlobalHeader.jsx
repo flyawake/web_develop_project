@@ -4,7 +4,7 @@ import './GlobalHeader.css';
 const GlobalHeader = () => {
     return (
         <header className="GlobalHeader">
-            <h1 className="title">盲盒</h1>
+            <h1 className="title">体育活动室</h1>
         </header>
     );
 };
