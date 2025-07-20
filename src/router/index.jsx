@@ -1,13 +1,17 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Login from '../views/Login';
-import Register from '../views/Register';
-import Profile from '../views/Profile';
+import Login from '../views/user/Login';
+import Register from '../views/user/Register';
+import Profile from '../views/user/Profile';
+import Admin from '../views/admin/Admin';
+import Create from '../views/admin/Create';
 
 const routes = [
-  { path: '/', element: <Login />, name: '登录 - 体育活动室' },
-  { path: '/register', element: <Register />, name: '注册 - 体育活动室' },
-  { path: '/profile', element: <Profile />, name: '个人信息 - 体育活动室' },
+  { path: '/', element: <Login />, name: '登录' },
+  { path: '/register', element: <Register />, name: '注册' },
+  { path: '/profile', element: <Profile />, name: '个人信息' },
+  { path: '/admin', element: <Admin />, name: '管理员界面' },
+  { path: '/create', element: <Create />, name: '创建活动' },
 ];
 
 const AppRouter = () => {

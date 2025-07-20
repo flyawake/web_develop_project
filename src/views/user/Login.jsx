@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import { login } from '../api/user';
+import { login } from '../../api/user';
 
 const Login = () => {
   const [form, setForm] = useState({ phone: '', password: '' });
@@ -23,7 +23,12 @@ const Login = () => {
     try {
       const res = await login({ phone: form.phone, password: form.password });
       if (res && res.success) {
-        navigate('/profile');
+        console.log(res);
+        if (res.data.role === 1) {
+          navigate('/admin');
+        } else {
+          navigate('/profile');
+        }
       } else {
         window.alert(res?.message || '登录失败，请重试');
       }
@@ -82,4 +87,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login; 

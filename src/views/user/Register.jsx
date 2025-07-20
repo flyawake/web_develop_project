@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Register.css';
-import { register } from '../api/user';
+import { register } from '../../api/user';
 import { useNavigate } from 'react-router-dom';
 
 const isValidPhone = phone => /^1[3-9]\d{9}$/.test(phone);
@@ -35,7 +35,6 @@ const Register = () => {
         username: form.username,
         password: form.password
       });
-      console.log(res);
       if (res && res.success) {
         window.alert('注册成功，请登录！');
         navigate('/');
@@ -126,4 +125,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Register; 

@@ -1,46 +1,47 @@
 .GlobalHeader {
-    background: #fff;
-    padding: 16px 0;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-    box-shadow: none;
+  background: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid #f1f3f4;
 }
 
 .title {
-    color: #222;
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    position: relative;
-    z-index: 2;
-    font-family: Arial, sans-serif;
-    text-shadow: none;
-    animation: none;
+  color: #1a1a1a;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 2;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-shadow: none;
+  animation: none;
 }
 
 .GlobalHeader::before,
 .GlobalHeader::after {
-    display: none;
-    content: none;
+  display: none;
+  content: none;
 }
 
 @media (max-width: 768px) {
-    .title {
-        font-size: 1.3rem;
-        padding: 0 10px;
-    }
-    .GlobalHeader {
-        padding: 10px 0;
-    }
+  .title {
+    font-size: 1.4rem;
+    padding: 0 10px;
+  }
+  .GlobalHeader {
+    padding: 16px 0;
+  }
 }
 
 @media (max-width: 480px) {
-    .title {
-        font-size: 1rem;
-        letter-spacing: 0.5px;
-    }
+  .title {
+    font-size: 1.2rem;
+    letter-spacing: 0.3px;
+  }
 }
