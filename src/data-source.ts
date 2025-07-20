@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { UserPO } from './po/userPo';
+import { ActivityPO } from './po/activityPo';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -8,6 +9,6 @@ export const AppDataSource = new DataSource({
   username: 'root',
   password: '123456',
   database: 'PE',
-  entities: [UserPO],
+  entities: [UserPO, ActivityPO],
   synchronize: false, // 自动同步表结构
 }); 

@@ -7,15 +7,15 @@ export class UserService {
   private userRepo = AppDataSource.getRepository(UserPO);
 
   // 注册
-  async register(phone: string, username: string, password: string) {
+  async register(phone: string, username: string, password: string, role: number = 0) {
     // 检查手机号是否已存在
     const exist = await this.userRepo.findOneBy({ phone });
     if (exist) {
       throw new Error('手机号已注册');
     }
-    const user = this.userRepo.create({ phone, username, password });
+    const user = this.userRepo.create({ phone, username, password, role });
     await this.userRepo.save(user);
-    return { id: user.id, phone: user.phone, username: user.username };
+    return { id: user.id, phone: user.phone, username: user.username, role: user.role };
   }
 
   // 登录
@@ -24,13 +24,13 @@ export class UserService {
     if (!user) {
       throw new Error('手机号或密码错误');
     }
-    return { id: user.id, phone: user.phone, username: user.username };
+    return { id: user.id, phone: user.phone, username: user.username, role: user.role };
   }
 
   // 通过ID查找用户
   async findById(id: number) {
     const user = await this.userRepo.findOneBy({ id });
     if (!user) return null;
-    return { id: user.id, phone: user.phone, username: user.username };
+    return { id: user.id, phone: user.phone, username: user.username, role: user.role };
   }
 } 
