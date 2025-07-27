@@ -1,73 +1,183 @@
 .profile-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  z-index: 0;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  background: #f8f9fa;
 }
 
-.profile-box {
-  background: #ffffff;
+.profile-box, .orders-box {
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  padding: 48px 40px 40px 40px;
-  width: 380px;
-  max-width: 90vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #f1f3f4;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-.profile-title {
-  font-size: 1.75rem;
-  color: #1a1a1a;
-  margin-bottom: 32px;
+.profile-title, .orders-title {
+  font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  text-align: center;
+  color: #2c3e50;
+  margin: 0 0 20px 0;
 }
 
 .profile-content {
-  width: 100%;
-  text-align: left;
+  display: grid;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
 .profile-item {
-  padding: 16px 0;
-  border-bottom: 1px solid #f1f3f4;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.profile-item:last-child {
-  border-bottom: none;
+  padding: 15px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background: #f8f9fa;
 }
 
 .profile-label {
-  font-size: 0.95rem;
-  color: #4a4a4a;
   font-weight: 500;
+  color: #2c3e50;
 }
 
 .profile-value {
-  font-size: 0.95rem;
-  color: #1a1a1a;
-  font-weight: 400;
+  color: #5a6c7d;
 }
 
-@media (max-width: 480px) {
-  .profile-box {
-    padding: 32px 24px 24px 24px;
-    width: 95vw;
+.profile-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 500;
+}
+
+.action-btn {
+  background: #3498db;
+  color: white;
+}
+
+.action-btn:hover {
+  background: #2980b9;
+}
+
+.action-btn.admin-btn {
+  background: #28a745;
+}
+
+.action-btn.admin-btn:hover {
+  background: #218838;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.no-orders {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.orders-list {
+  display: grid;
+  gap: 15px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background: #f8f9fa;
+  transition: box-shadow 0.3s;
+}
+
+.order-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-info h4 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+.order-info p {
+  margin: 5px 0;
+  color: #5a6c7d;
+  font-size: 14px;
+}
+
+.order-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.order-status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.order-status.approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.order-status.rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.order-time {
+  color: #6c757d;
+  font-size: 12px;
+  text-align: right;
+}
+
+.error {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 15px;
   }
-  .profile-title {
-    font-size: 1.5rem;
+  
+  .profile-actions {
+    flex-direction: column;
+  }
+  
+  .order-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  .order-time {
+    text-align: left;
   }
 } 
