@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ActivityVO } from '../vo/activityVo';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { UserPO } from './userPo';
+import { OrderPO } from './orderPo';
+import { CommentPO } from './commentPo';
 
 @Entity('activities')
 export class ActivityPO {
@@ -7,28 +9,44 @@ export class ActivityPO {
   id: number;
 
   @Column()
-  name: string;
+  title: string;
 
   @Column('text')
-  content: string;
+  description: string;
 
-  @Column('date')
-  startDate: Date;
+  @Column()
+  location: string;
 
-  @Column('date')
-  endDate: Date;
+  @Column()
+  maxParticipants: number;
 
-  @Column('decimal', { precision: 10, scale: 2 })
-  registrationFee: number;
+  @Column()
+  currentParticipants: number;
 
-  toVO(): ActivityVO {
-    const vo = new ActivityVO();
-    vo.id = this.id;
-    vo.name = this.name;
-    vo.content = this.content;
-    vo.startDate = this.startDate;
-    vo.endDate = this.endDate;
-    vo.registrationFee = this.registrationFee;
-    return vo;
-  }
+  @Column('datetime')
+  startTime: Date;
+
+  @Column('datetime')
+  endTime: Date;
+
+  @Column()
+  status: string;
+
+  @Column()
+  imageUrl: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => UserPO, user => user.activities)
+  creator: UserPO;
+
+  @OneToMany(() => OrderPO, order => order.activity)
+  orders: OrderPO[];
+
+  @OneToMany(() => CommentPO, comment => comment.activity)
+  comments: CommentPO[];
 } 

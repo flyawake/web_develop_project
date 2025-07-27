@@ -25,10 +25,18 @@ export class MainConfiguration {
   app: koa.Application;
 
   async onReady() {
-    // add middleware
     this.app.useMiddleware([ReportMiddleware]);
-    // add filter
-    // this.app.useFilter([NotFoundFilter, DefaultErrorFilter]);
+    
+    this.app.use(async (ctx, next) => {
+      ctx.set('Access-Control-Allow-Origin', '*');
+      ctx.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+      ctx.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      if (ctx.method === 'OPTIONS') {
+        ctx.status = 204;
+      } else {
+        await next();
+      }
+    });
 
     await AppDataSource.initialize();
   }

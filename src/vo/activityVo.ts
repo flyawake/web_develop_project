@@ -1,19 +1,16 @@
 export class ActivityVO {
   id: number;
-  name: string;
-  content: string;
-  startDate: Date;
-  endDate: Date;
-  registrationFee: number;
-
-  toPO(): import('../po/activityPo').ActivityPO {
-    const po = new (require('../po/activityPo').ActivityPO)();
-    po.id = this.id;
-    po.name = this.name;
-    po.content = this.content;
-    po.startDate = this.startDate;
-    po.endDate = this.endDate;
-    po.registrationFee = this.registrationFee;
-    return po;
-  }
+  title: string;
+  description: string;
+  location: string;
+  maxParticipants: number;
+  currentParticipants: number;
+  startTime: Date;
+  endTime: Date;
+  status: string;
+  imageUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
+  creatorId: number;
+  creatorName: string;
 } 
