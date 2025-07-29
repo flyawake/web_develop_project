@@ -1,6 +1,6 @@
 import { ActivityService } from '../service/activityService';
 import { Context } from '@midwayjs/koa';
-import { Controller, Post, Get, Put, Delete, Body, Query, Param, Inject } from '@midwayjs/core';
+import { Controller, Post, Get, Put, Body, Query, Param, Inject } from '@midwayjs/core';
 
 @Controller('/api/activity')
 export class ActivityController {
@@ -13,6 +13,7 @@ export class ActivityController {
   @Post('/create')
   async createActivity(@Body() body: any) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const activity = await this.activityService.createActivity(body.creatorId, body);
       this.ctx.body = { success: true, message: '活动创建成功', data: activity };
     } catch (err) {
@@ -25,6 +26,7 @@ export class ActivityController {
   @Get('/list')
   async getActivities(@Query('page') page: number = 1, @Query('limit') limit: number = 10, @Query('search') search?: string) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const result = await this.activityService.getActivities(page, limit, search);
       this.ctx.body = { success: true, data: result };
     } catch (err) {
@@ -37,6 +39,7 @@ export class ActivityController {
   @Get('/:id')
   async getActivityById(@Param('id') id: number) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const activity = await this.activityService.getActivityById(id);
       if (!activity) {
         this.ctx.body = { success: false, message: '活动不存在' };
@@ -53,6 +56,7 @@ export class ActivityController {
   @Put('/:id')
   async updateActivity(@Param('id') id: number, @Body() body: any) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const activity = await this.activityService.updateActivity(id, body);
       this.ctx.body = { success: true, message: '活动更新成功', data: activity };
     } catch (err) {
@@ -62,9 +66,10 @@ export class ActivityController {
     }
   }
 
-  @Delete('/:id')
+  @Post('/:id/delete')
   async deleteActivity(@Param('id') id: number) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       await this.activityService.deleteActivity(id);
       this.ctx.body = { success: true, message: '活动删除成功' };
     } catch (err) {
@@ -77,6 +82,7 @@ export class ActivityController {
   @Get('/creator/:creatorId')
   async getActivitiesByCreator(@Param('creatorId') creatorId: number) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const activities = await this.activityService.getActivitiesByCreator(creatorId);
       this.ctx.body = { success: true, data: activities };
     } catch (err) {

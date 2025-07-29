@@ -1,6 +1,6 @@
 import { OrderService } from '../service/orderService';
 import { Context } from '@midwayjs/koa';
-import { Controller, Post, Get, Put, Delete, Body, Param, Inject } from '@midwayjs/core';
+import { Controller, Post, Get, Put, Body, Param, Inject } from '@midwayjs/core';
 
 @Controller('/api/order')
 export class OrderController {
@@ -13,6 +13,7 @@ export class OrderController {
   @Post('/create')
   async createOrder(@Body() body: { userId: number; activityId: number; note?: string }) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const order = await this.orderService.createOrder(body.userId, body.activityId, body.note);
       this.ctx.body = { success: true, message: '报名成功', data: order };
     } catch (err) {
@@ -25,6 +26,7 @@ export class OrderController {
   @Get('/user/:userId')
   async getOrdersByUser(@Param('userId') userId: number) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const orders = await this.orderService.getOrdersByUser(userId);
       this.ctx.body = { success: true, data: orders };
     } catch (err) {
@@ -37,6 +39,7 @@ export class OrderController {
   @Get('/activity/:activityId')
   async getOrdersByActivity(@Param('activityId') activityId: number) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const orders = await this.orderService.getOrdersByActivity(activityId);
       this.ctx.body = { success: true, data: orders };
     } catch (err) {
@@ -49,6 +52,7 @@ export class OrderController {
   @Put('/:id/status')
   async updateOrderStatus(@Param('id') id: number, @Body() body: { status: string }) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const order = await this.orderService.updateOrderStatus(id, body.status);
       this.ctx.body = { success: true, message: '订单状态更新成功', data: order };
     } catch (err) {
@@ -58,9 +62,10 @@ export class OrderController {
     }
   }
 
-  @Delete('/:id')
+  @Post('/:id/delete')
   async deleteOrder(@Param('id') id: number, @Body() body: { userId: number }) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       await this.orderService.deleteOrder(id, body.userId);
       this.ctx.body = { success: true, message: '订单删除成功' };
     } catch (err) {

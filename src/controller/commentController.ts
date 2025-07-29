@@ -1,6 +1,6 @@
 import { CommentService } from '../service/commentService';
 import { Context } from '@midwayjs/koa';
-import { Controller, Post, Get, Delete, Body, Param, Inject } from '@midwayjs/core';
+import { Controller, Post, Get, Body, Param, Inject } from '@midwayjs/core';
 
 @Controller('/api/comment')
 export class CommentController {
@@ -13,6 +13,7 @@ export class CommentController {
   @Post('/create')
   async createComment(@Body() body: { userId: number; activityId: number; content: string; rating: number }) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const comment = await this.commentService.createComment(body.userId, body.activityId, body.content, body.rating);
       this.ctx.body = { success: true, message: '评论发布成功', data: comment };
     } catch (err) {
@@ -25,6 +26,7 @@ export class CommentController {
   @Get('/activity/:activityId')
   async getCommentsByActivity(@Param('activityId') activityId: number) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       const comments = await this.commentService.getCommentsByActivity(activityId);
       this.ctx.body = { success: true, data: comments };
     } catch (err) {
@@ -34,9 +36,10 @@ export class CommentController {
     }
   }
 
-  @Delete('/:id')
+  @Post('/:id/delete')
   async deleteComment(@Param('id') id: number, @Body() body: { userId: number }) {
     try {
+      this.ctx.set('Content-Type', 'application/json');
       await this.commentService.deleteComment(id, body.userId);
       this.ctx.body = { success: true, message: '评论删除成功' };
     } catch (err) {
