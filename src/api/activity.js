@@ -22,12 +22,23 @@ export const getActivityById = async (id) => {
 
 export const createActivity = async (activityData) => {
   try {
+    let headers = {};
+    let body = activityData;
+    
+    // 如果是FormData，不设置Content-Type，让浏览器自动设置
+    if (activityData instanceof FormData) {
+      body = activityData;
+    } else {
+      headers = {
+        'Content-Type': 'application/json',
+      };
+      body = JSON.stringify(activityData);
+    }
+    
     const response = await fetch(`${API_MODULE}/activity/create`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(activityData),
+      headers,
+      body,
     });
     return await response.json();
   } catch (error) {
@@ -38,12 +49,23 @@ export const createActivity = async (activityData) => {
 
 export const updateActivity = async (id, activityData) => {
   try {
+    let headers = {};
+    let body = activityData;
+    
+    // 如果是FormData，不设置Content-Type，让浏览器自动设置
+    if (activityData instanceof FormData) {
+      body = activityData;
+    } else {
+      headers = {
+        'Content-Type': 'application/json',
+      };
+      body = JSON.stringify(activityData);
+    }
+    
     const response = await fetch(`${API_MODULE}/activity/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(activityData),
+      headers,
+      body,
     });
     return await response.json();
   } catch (error) {
@@ -73,6 +95,23 @@ export const getActivitiesByCreator = async (creatorId) => {
     return await response.json();
   } catch (error) {
     console.error('获取创建者活动失败:', error);
+    throw error;
+  }
+};
+
+export const uploadImage = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+    console.log(file);
+    console.log(formData);
+    const response = await fetch(`${API_MODULE}/activity/upload-image`, {
+      method: 'POST',
+      body: formData,
+    });
+    return await response.json();
+  } catch (error) {
+    console.error('上传图片失败:', error);
     throw error;
   }
 };
