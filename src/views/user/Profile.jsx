@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getOrdersByUser } from '../../api/order';
+import { getOrdersByUser, deleteOrder } from '../../api/order';
 import './Profile.css';
 
 const Profile = () => {
@@ -27,6 +27,22 @@ const Profile = () => {
       console.error('获取用户订单失败:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteOrder = async (orderId, userId, orderStatus) => {
+    const actionText = orderStatus === 'approved' ? '取消报名' : '退选';
+    const confirmMessage = `确定要${actionText}吗？此操作不可撤销。`;
+    
+    if (window.confirm(confirmMessage)) {
+      try {
+        const response = await deleteOrder(orderId, userId);
+        if (response.success) {
+          fetchUserOrders(userId);
+        }
+      } catch (error) {
+        console.error('删除订单失败:', error);
+      }
     }
   };
 
@@ -91,8 +107,18 @@ const Profile = () => {
                        order.status === 'approved' ? '已通过' : '已拒绝'}
                     </span>
                   </div>
-                  <div className="order-time">
-                    {formatDate(order.createdAt)}
+                  <div className="order-actions">
+                    <div className="order-time">
+                      {formatDate(order.createdAt)}
+                    </div>
+                                             <button 
+                        className="cancel-btn"
+                        onClick={() => {
+                          handleDeleteOrder(order.id, user.id, order.status);
+                        }}
+                      >
+                        {order.status === 'approved' ? '取消报名' : '退选'}
+                      </button>
                   </div>
                 </div>
               ))

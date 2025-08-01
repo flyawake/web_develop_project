@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 import { register } from '../../api/user';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const isValidPhone = phone => /^1[3-9]\d{9}$/.test(phone);
 
@@ -115,11 +115,14 @@ const Register = () => {
             type="submit"
             className="register-btn"
             disabled={!canSubmit}
-            style={!canSubmit ? { background: '#eee', color: '#aaa', borderColor: '#eee', cursor: 'not-allowed' } : {}}
           >
             {loading ? '注册中...' : '注册'}
           </button>
         </form>
+        
+        <div className="register-footer">
+          <p>已有账号？<Link to="/" className="login-link">立即登录</Link></p>
+        </div>
       </div>
     </div>
   );

@@ -75,18 +75,13 @@ const ActivityList = () => {
               </div>
               <div className="activity-info">
                 <h3 className="activity-title">{activity.title}</h3>
-                <p className="activity-location">📍 {activity.location}</p>
+                <p className="activity-location"> {activity.location}</p>
                 <p className="activity-time">
-                  📅 {formatDate(activity.startTime)} {formatTime(activity.startTime)}
+                   {formatDate(activity.startTime)} {formatTime(activity.startTime)}-{formatDate(activity.endTime)} {formatTime(activity.endTime)}
                 </p>
                 <p className="activity-participants">
-                  👥 {activity.currentParticipants}/{activity.maxParticipants} 人
+                   {activity.currentParticipants}/{activity.maxParticipants} 人
                 </p>
-                <div className="activity-status">
-                  <span className={`status-badge ${activity.status}`}>
-                    {activity.status === 'active' ? '进行中' : '已结束'}
-                  </span>
-                </div>
               </div>
             </div>
           ))}

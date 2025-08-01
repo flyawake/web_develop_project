@@ -35,15 +35,15 @@ const Admin = () => {
   return (
     <div className="admin-container">
       <div className="admin-header">
-        <h1 className="admin-title">管理员界面</h1>
-        <button className="create-btn" onClick={() => navigate('/create-activity')}>
+        <h1 className="admin-title">管理员</h1>
+        <button className="create-btn" onClick={() => navigate('/create')}>
           创建新活动
         </button>
       </div>
       
       <div className="admin-content">
         <div className="admin-section">
-          <h3>我的活动</h3>
+          <h3>我创建的活动</h3>
           {loading ? (
             <div className="loading">加载中...</div>
           ) : (

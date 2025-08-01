@@ -202,23 +202,23 @@ const ActivityDetail = () => {
             
             <div className="activity-meta">
               <div className="meta-item">
-                <span className="meta-label">📍 地点:</span>
+                <span className="meta-label"> 地点:</span>
                 <span className="meta-value">{activity.location}</span>
               </div>
               <div className="meta-item">
-                <span className="meta-label">📅 开始时间:</span>
+                <span className="meta-label"> 开始时间:</span>
                 <span className="meta-value">{formatDate(activity.startTime)} {formatTime(activity.startTime)}</span>
               </div>
               <div className="meta-item">
-                <span className="meta-label">📅 结束时间:</span>
+                <span className="meta-label"> 结束时间:</span>
                 <span className="meta-value">{formatDate(activity.endTime)} {formatTime(activity.endTime)}</span>
               </div>
               <div className="meta-item">
-                <span className="meta-label">👥 参与人数:</span>
+                <span className="meta-label"> 参与人数:</span>
                 <span className="meta-value">{activity.currentParticipants}/{activity.maxParticipants}</span>
               </div>
               <div className="meta-item">
-                <span className="meta-label">👤 创建者:</span>
+                <span className="meta-label"> 创建者:</span>
                 <span className="meta-value">{activity.creator.username}</span>
               </div>
             </div>
