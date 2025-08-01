@@ -12,5 +12,5 @@ export const AppDataSource = new DataSource({
   password: '123456',
   database: 'PE',
   entities: [UserPO, ActivityPO, OrderPO, CommentPO],
-  synchronize: true,
+  synchronize: false,
 }); 

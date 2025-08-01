@@ -1,4 +1,5 @@
 import { ActivityService } from '../service/activityService';
+import { UploadService } from '../service/uploadService';
 import { Context } from '@midwayjs/koa';
 import { Controller, Post, Get, Put, Body, Query, Param, Inject } from '@midwayjs/core';
 
@@ -8,13 +9,27 @@ export class ActivityController {
   activityService: ActivityService;
 
   @Inject()
+  uploadService: UploadService;
+
+  @Inject()
   ctx: Context;
 
   @Post('/create')
   async createActivity(@Body() body: any) {
     try {
       this.ctx.set('Content-Type', 'application/json');
-      const activity = await this.activityService.createActivity(body.creatorId, body);
+      
+      let imageUrl = body.imageUrl; // 如果没有上传文件，使用原有的imageUrl
+      
+      // 如果有上传文件，处理图片上传
+      const file = (this.ctx as any).file;
+      if (file) {
+        imageUrl = await this.uploadService.uploadImage(file);
+      }
+      
+      // 将图片URL添加到活动数据中
+      const activityData = { ...body, imageUrl };
+      const activity = await this.activityService.createActivity(body.creatorId, activityData);
       this.ctx.body = { success: true, message: '活动创建成功', data: activity };
     } catch (err) {
       console.error('创建活动异常', err);
@@ -57,7 +72,24 @@ export class ActivityController {
   async updateActivity(@Param('id') id: number, @Body() body: any) {
     try {
       this.ctx.set('Content-Type', 'application/json');
-      const activity = await this.activityService.updateActivity(id, body);
+      
+      let imageUrl = body.imageUrl;
+      
+      // 如果有上传文件，处理图片上传
+      const file = (this.ctx as any).file;
+      if (file) {
+        // 获取原活动信息，删除旧图片
+        const oldActivity = await this.activityService.getActivityById(id);
+        if (oldActivity && oldActivity.imageUrl) {
+          await this.uploadService.deleteImage(oldActivity.imageUrl);
+        }
+        
+        imageUrl = await this.uploadService.uploadImage(file);
+      }
+      
+      // 将图片URL添加到活动数据中
+      const activityData = { ...body, imageUrl };
+      const activity = await this.activityService.updateActivity(id, activityData);
       this.ctx.body = { success: true, message: '活动更新成功', data: activity };
     } catch (err) {
       console.error('更新活动异常', err);
@@ -70,6 +102,13 @@ export class ActivityController {
   async deleteActivity(@Param('id') id: number) {
     try {
       this.ctx.set('Content-Type', 'application/json');
+      
+      // 获取活动信息，删除关联的图片
+      const activity = await this.activityService.getActivityById(id);
+      if (activity && activity.imageUrl) {
+        await this.uploadService.deleteImage(activity.imageUrl);
+      }
+      
       await this.activityService.deleteActivity(id);
       this.ctx.body = { success: true, message: '活动删除成功' };
     } catch (err) {
@@ -89,6 +128,39 @@ export class ActivityController {
       console.error('获取创建者活动异常', err);
       this.ctx.set('Content-Type', 'application/json');
       this.ctx.body = { success: false, message: err && err.message ? err.message : '服务器异常' };
+    }
+  }
+
+  @Post('/upload-image')
+  async uploadImage() {
+    try {
+      this.ctx.set('Content-Type', 'application/json');
+      
+      // 使用 @koa/multer 时，文件存储在 ctx.file 中
+      const file = (this.ctx as any).file;
+      
+      if (!file) {
+        this.ctx.body = {
+          success: false,
+          message: '请选择要上传的图片'
+        };
+        return;
+      }
+      
+      const imageUrl = await this.uploadService.uploadImage(file);
+      
+      this.ctx.body = {
+        success: true,
+        message: '图片上传成功',
+        data: { imageUrl }
+      };
+    } catch (err) {
+      console.error('图片上传异常', err);
+      this.ctx.set('Content-Type', 'application/json');
+      this.ctx.body = {
+        success: false,
+        message: err && err.message ? err.message : '图片上传失败'
+      };
     }
   }
 } 
