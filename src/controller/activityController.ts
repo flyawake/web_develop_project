@@ -103,7 +103,6 @@ export class ActivityController {
     try {
       this.ctx.set('Content-Type', 'application/json');
       
-      // 获取活动信息，删除关联的图片
       const activity = await this.activityService.getActivityById(id);
       if (activity && activity.imageUrl) {
         await this.uploadService.deleteImage(activity.imageUrl);
@@ -136,7 +135,6 @@ export class ActivityController {
     try {
       this.ctx.set('Content-Type', 'application/json');
       
-      // 使用 @koa/multer 时，文件存储在 ctx.file 中
       const file = (this.ctx as any).file;
       
       if (!file) {
