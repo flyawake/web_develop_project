@@ -18,6 +18,7 @@ const ActivityDetail = () => {
   const [orderNote, setOrderNote] = useState('');
   const [commentContent, setCommentContent] = useState('');
   const [commentRating, setCommentRating] = useState(5);
+  const [commentFilter, setCommentFilter] = useState(0); // 0表示显示所有评论
 
   useEffect(() => {
     fetchActivityDetail();
@@ -168,6 +169,11 @@ const ActivityDetail = () => {
   const hasOrdered = orders.some(order => order.user.id === currentUser?.id);
   const userOrder = orders.find(order => order.user.id === currentUser?.id);
 
+  // 根据筛选条件过滤评论
+  const filteredComments = commentFilter === 0 
+    ? comments 
+    : comments.filter(comment => comment.rating === commentFilter);
+
   return (
     <div className="activity-detail-container">
       <div className="activity-detail-header">
@@ -283,16 +289,33 @@ const ActivityDetail = () => {
 
         <div className="comments-section">
           <div className="comments-header">
-            <h2>评论 ({comments.length})</h2>
-            {currentUser && (
-              <button onClick={() => setShowCommentForm(true)} className="comment-btn">
-                发表评论
-              </button>
-            )}
+            <h2>评论 ({filteredComments.length})</h2>
+            <div className="comments-controls">
+              <div className="comment-filter">
+                <span>筛选:</span>
+                <select 
+                  value={commentFilter} 
+                  onChange={(e) => setCommentFilter(parseInt(e.target.value))}
+                  className="filter-select"
+                >
+                  <option value={0}>全部评论</option>
+                  <option value={5}>5星评论</option>
+                  <option value={4}>4星评论</option>
+                  <option value={3}>3星评论</option>
+                  <option value={2}>2星评论</option>
+                  <option value={1}>1星评论</option>
+                </select>
+              </div>
+              {currentUser && (
+                <button onClick={() => setShowCommentForm(true)} className="comment-btn">
+                  发表评论
+                </button>
+              )}
+            </div>
           </div>
           
           <div className="comments-list">
-            {comments.map(comment => (
+            {filteredComments.map(comment => (
               <div key={comment.id} className="comment-item">
                 <div className="comment-header">
                   <span className="comment-author">{comment.user.username}</span>

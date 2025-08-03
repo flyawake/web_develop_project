@@ -259,6 +259,39 @@
   margin-bottom: 20px;
 }
 
+.comments-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.comment-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-filter span {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.filter-select {
+  padding: 6px 12px;
+  border: 2px solid #e1e8ed;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
 .comment-btn {
   padding: 8px 16px;
   background: #3498db;
@@ -467,6 +500,16 @@
   .comment-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+  
+  .comments-controls {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .comment-filter {
+    justify-content: center;
   }
   
   .activity-detail-container {
