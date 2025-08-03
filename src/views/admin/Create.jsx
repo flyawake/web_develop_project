@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createActivity } from '../../api/activity';
+import { createActivity,uploadImage  } from '../../api/activity';
 import './Create.css';
 
 const Create = () => {
@@ -12,14 +12,36 @@ const Create = () => {
     location: '',
     maxParticipants: '',
     startTime: '',
-    endTime: '',
-    imageUrl: ''
+    endTime: ''
   });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
+  const [fileInputKey, setFileInputKey] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      // 创建预览URL
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setSelectedFile(null);
+    setImagePreview('');
+    // 重新渲染文件输入框
+    setFileInputKey(prev => prev + 1);
   };
 
   const handleSubmit = async (e) => {
@@ -31,15 +53,26 @@ const Create = () => {
 
     setLoading(true);
     try {
-      const activityData = {
-        ...form,
-        creatorId: currentUser.id,
-        maxParticipants: parseInt(form.maxParticipants),
-        startTime: new Date(form.startTime).toISOString(),
-        endTime: new Date(form.endTime).toISOString()
-      };
+      const formData = new FormData();
+      
+      // 添加活动数据
+      formData.append('creatorId', currentUser.id);
+      formData.append('title', form.title);
+      formData.append('description', form.description);
+      formData.append('location', form.location);
+      formData.append('maxParticipants', form.maxParticipants);
+      formData.append('startTime', new Date(form.startTime).toISOString());
+      formData.append('endTime', new Date(form.endTime).toISOString());
+      
+      // 添加照片文件
+      if (selectedFile) {
+        const res = await uploadImage(selectedFile);
+        if (res.success) {
+          formData.append('imageUrl', res.data.imageUrl);
+        }
+      }
 
-      const response = await createActivity(activityData);
+      const response = await createActivity(formData);
       if (response.success) {
         alert('活动创建成功！');
         navigate('/admin');
@@ -47,6 +80,7 @@ const Create = () => {
         alert(response.message || '创建失败');
       }
     } catch (error) {
+      console.error('创建失败:', error);
       alert('创建失败，请重试');
     } finally {
       setLoading(false);
@@ -57,7 +91,7 @@ const Create = () => {
     navigate('/admin');
   };
 
-  const allFieldsFilled = Object.values(form).every(value => value.trim() !== '');
+  const allFieldsFilled = Object.values(form).every(value => value.trim() !== '') && selectedFile;
 
   return (
     <div className="create-container">
@@ -150,17 +184,41 @@ const Create = () => {
           </div>
           
           <div className="input-group">
-            <label htmlFor="imageUrl">活动图片URL</label>
-            <input
-              type="url"
-              id="imageUrl"
-              name="imageUrl"
-              placeholder="请输入活动图片链接（可选）"
-              value={form.imageUrl}
-              onChange={handleChange}
-              disabled={loading}
-            />
+            <label htmlFor="imageFile">活动图片 *</label>
+                         <input
+               key={fileInputKey}
+               type="file"
+               id="imageFile"
+               name="imageFile"
+               accept="image/*"
+               onChange={handleFileChange}
+               disabled={loading}
+               required
+               multiple={false}
+             />
+                         {imagePreview && (
+               <div className="image-preview">
+                 <img src={imagePreview} alt="预览" style={{ maxWidth: '200px', maxHeight: '200px' }} />
+                 <button 
+                   type="button" 
+                   onClick={handleRemoveImage}
+                   style={{
+                     marginTop: '10px',
+                     padding: '8px 16px',
+                     backgroundColor: '#dc3545',
+                     color: 'white',
+                     border: 'none',
+                     borderRadius: '4px',
+                     cursor: 'pointer'
+                   }}
+                 >
+                   删除图片
+                 </button>
+               </div>
+             )}
           </div>
+          
+
           
           <div className="button-group">
             <button type="button" className="cancel-btn" onClick={handleCancel} disabled={loading}>
