@@ -4,10 +4,7 @@
   flex-direction: column;
 }
 
-/* 保证内容部分居中且不被头部遮挡 */
+/* 保证内容部分不被头部遮挡 */
 .App > div {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
