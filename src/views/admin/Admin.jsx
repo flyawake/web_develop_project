@@ -13,7 +13,7 @@ const Admin = () => {
     if (currentUser) {
       fetchMyActivities();
     }
-  }, [currentUser]);
+  }, []);
 
   const fetchMyActivities = async () => {
     try {
@@ -58,9 +58,6 @@ const Admin = () => {
                       <p>地点: {activity.location}</p>
                       <p>时间: {formatDate(activity.startTime)}</p>
                       <p>参与人数: {activity.currentParticipants}/{activity.maxParticipants}</p>
-                      <span className={`status-badge ${activity.status}`}>
-                        {activity.status === 'active' ? '进行中' : '已结束'}
-                      </span>
                     </div>
                     <div className="activity-actions">
                       <button 
