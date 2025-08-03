@@ -24,8 +24,16 @@ const AppRouter = () => {
   const location = useLocation();
 
   React.useEffect(() => {
-    const current = routes.find(r => r.path === location.pathname);
-    document.title = current?.name;
+    const current = routes.find(r => {
+      // 处理动态路由匹配
+      if (r.path.includes(':')) {
+        // 将动态路由转换为正则表达式进行匹配
+        const pathRegex = new RegExp('^' + r.path.replace(/:[^/]+/g, '[^/]+') + '$');
+        return pathRegex.test(location.pathname);
+      }
+      return r.path === location.pathname;
+    });
+    document.title = current?.name || '活动管理系统';
   }, [location]);
 
   return (
