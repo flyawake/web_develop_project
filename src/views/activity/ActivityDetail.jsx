@@ -177,7 +177,7 @@ const ActivityDetail = () => {
         {(isCreator || isAdmin) && (
           <div className="creator-actions">
             {isCreator && (
-              <button onClick={() => navigate(`/edit-activity/${id}`)} className="edit-btn">
+              <button onClick={() => navigate(`/edit/${id}`)} className="edit-btn">
                 编辑活动
               </button>
             )}
