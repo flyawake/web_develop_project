@@ -8,10 +8,10 @@ export class OSSConfig {
 
   constructor() {
     this.client = new OSS({
-      region: 'oss-cn-beijing', 
-      accessKeyId: 'LTAI5tKWko7MxoP8x7tSNswh', 
-      accessKeySecret: 'eqRFegC07AoMF1el2pwPA7cX1oKSIf', 
-      bucket: 'flyleaf', 
+      region: '', 
+      accessKeyId: '', 
+      accessKeySecret: '', 
+      bucket: '', 
     });
   }
 
